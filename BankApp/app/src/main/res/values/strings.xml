@@ -1,0 +1,26 @@
+<resources>
+    <string name="app_name">Bank App</string>
+    <string name="app_logo">Logo App</string>
+
+    <string name="password">Password</string>
+
+
+    <string name="login_button">Login</string>
+
+    <string name="forgot_password">Forgot passowrd</string>
+
+    <string name="welcome">Welcome!</string>
+    <string name="account">Account:</string>
+    <string name="balance">Balance:</string>
+
+    <string name="transfer">Transfer</string>
+    <string name="history">Transaction history</string>
+    <string name="profile">Profile</string>
+    <string name="logout">Logout</string>
+
+    <string-array name="operation_types">
+        <item>Deposit</item>
+        <item>Withdraw</item>
+    </string-array>
+
+</resources>

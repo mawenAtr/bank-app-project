@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+          package="com.example.bankapp">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <application
+            android:usesCleartextTraffic="true"
+            android:allowBackup="true"
+            android:label="@string/app_name"
+            android:supportsRtl="true"
+            android:theme="@style/Theme.BankApp">
+
+        <activity
+                android:name=".activities.SplashActivity"
+                android:exported="true"
+                android:theme="@style/Theme.BankApp.Splash">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity
+                android:name=".activities.LoginActivity"
+                android:exported="false" />
+
+        <activity
+                android:name=".activities.DashboardActivity"
+                android:exported="false" />
+
+        <activity
+                android:name=".activities.TransferActivity"
+                android:label="Transfer"
+                android:parentActivityName=".activities.DashboardActivity">
+            <meta-data
+                    android:name="android.support.PARENT_ACTIVITY"
+                    android:value=".activities.DashboardActivity" />
+        </activity>
+
+        <activity
+                android:name=".activities.HistoryActivity"
+                android:label="Payment history"
+                android:parentActivityName=".activities.DashboardActivity">
+            <meta-data
+                    android:name="android.support.PARENT_ACTIVITY"
+                    android:value=".activities.DashboardActivity" />
+        </activity>
+
+        <activity
+                android:name=".activities.AccountSettingsActivity"
+                android:label="Settings"
+                android:parentActivityName=".activities.DashboardActivity">
+            <meta-data
+                    android:name="android.support.PARENT_ACTIVITY"
+                    android:value=".activities.DashboardActivity" />
+        </activity>
+
+        <activity
+                android:name=".activities.WithdrawActivity"
+                android:label="Withdraw"
+                android:parentActivityName=".activities.DashboardActivity">
+            <meta-data
+                    android:name="android.support.PARENT_ACTIVITY"
+                    android:value=".activities.DashboardActivity" />
+        </activity>
+
+        <activity
+                android:name=".activities.DepositActivity"
+                android:label="Deposit"
+                android:parentActivityName=".activities.DashboardActivity">
+            <meta-data
+                    android:name="android.support.PARENT_ACTIVITY"
+                    android:value=".activities.DashboardActivity" />
+        </activity>
+
+        <activity
+                android:name=".activities.ATMOperationActivity"
+                android:label="Operation ATM"
+                android:parentActivityName=".activities.DashboardActivity">
+            <meta-data
+                    android:name="android.support.PARENT_ACTIVITY"
+                    android:value=".activities.DashboardActivity" />
+        </activity>
+
+        <activity
+                android:name=".activities.CreateAccountActivity"
+                android:exported="false" />
+
+        <activity
+                android:name=".activities.RecoveryPasswordActivity"
+                android:exported="false"
+                android:parentActivityName=".activities.LoginActivity" />
+
+    </application>
+
+</manifest>
