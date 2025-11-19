@@ -1,7 +1,8 @@
 bank-app-project
 
-Mobile aplication 
-  
+Mobile aplication build android (Java) and Spring boot backend. 
+Basic activities such as logging in, creating an account , transfer and history transaction.
+
 1. Features
    
 - User login
@@ -28,7 +29,10 @@ Mobile aplication
 3. Future implementation
 
 - Recovery password
-- Currency exchange 
+- Currency exchange
+- Notifications
+- Virtual Card 
+
 
 
 
