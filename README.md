@@ -4,4 +4,4 @@
 
 
 
-| ![Create Account](images/CreateAccount.png) | ![Login](images/Login.png) | ![Password Recovery](images/RecoverPassword.png) |
+| ![Create Account](photos/CreateAccount.png) | ![Login](photos/Login.png) | ![Password Recovery](photos/RecoverPassword.png) |
