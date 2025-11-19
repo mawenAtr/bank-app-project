@@ -32,9 +32,20 @@ Mobile aplication
 
 
 
+<div align="center" style="display: flex; flex-wrap: wrap; justify-content: center; gap: 10px;">
+  
+<img src="photos/CreateAccount.png" width="180" alt="Create Account">
+<img src="photos/Login.png" width="180" alt="Login">  
+<img src="photos/RecoverPassword.png" width="180" alt="Password Recovery">
+<img src="photos/Dashboard.png" width="180" alt="Dashboard">
+<img src="photos/SimulatorATM.png" width="180" alt="ATM Operations">
+<img src="photos/Transfer.png" width="180" alt="Money Transfer">
+<img src="photos/DepositATM.png" width="180" alt="Deposit">
+<img src="photos/WithdrawATM.png" width="180" alt="Withdraw">
+<img src="photos/HistoryTransaction.png" width="180" alt="Transaction History">
+<img src="photos/SettingProfile1.png" width="180" alt="Profile View">
+<img src="photos/SettingsProfile2.png" width="180" alt="Profile Settings">
+  
+</div>
 
-![Create Account](photos/CreateAccount.png){: width="200"} ![Login](photos/Login.png){: width="200"} ![Password Recovery](photos/RecoverPassword.png){: width="200"}
-![Dashboard](photos/Dashboard.png){: width="200"} ![ATM Operations](photos/SimulatorATM.png){: width="200"} ![Transfer](photos/Transfer.png){: width="200"}
-![Deposit](photos/DepositATM.png){: width="200"} ![Withdraw](photos/WithdrawATM.png){: width="200"} ![Transaction History](photos/HistoryTransaction.png){: width="200"}
-![Profile View](photos/SettingProfile1.png){: width="200"} ![Profile Settings](photos/SettingsProfile2.png){: width="200"}
 
