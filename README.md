@@ -5,14 +5,17 @@ Basic activities such as logging in, creating an account , transfer and history 
 
 1. Features
    
-- User login
-- Create account
-- Balance account
-- Transfer
-- History tansaction
-- Settings profile
-- Backend Rest API
-- ATM simulator
+- User Authentication: Secure login system
+- Account Management: Create and manage bank accounts
+- Balance Overview: Real-time account balance display
+- Fund Transfers: Send money between accounts
+- Transaction History: View past transactions
+- Profile Settings: User profile customization
+- ATM Simulator: Simulated ATM functionality
+
+- Backend REST API: Full-featured Spring Boot API
+- Database Integration: MySQL with Hibernate/JPA
+- Containerization: Docker for database management
 
 2. Technologies
 
@@ -26,13 +29,18 @@ Basic activities such as logging in, creating an account , transfer and history 
 - MySql (container on docker)
 - Rest API
 
-3. Future implementation
+3. Installation and run
+
+Requirement: JDK 17, Docker 20.10
+
+
+
+4. Future implementation
 
 - Recovery password
 - Currency exchange
 - Notifications
 - Virtual Card 
-
 
 
 
