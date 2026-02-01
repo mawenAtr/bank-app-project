@@ -54,6 +54,8 @@ Requirement: JDK 17, Docker 20.10
 <img src="demo/Transfer.png" width="200" alt="Money Transfer">
 <img src="demo/DepositATM.png" width="200" alt="Deposit">
 <img src="demo/WithdrawATM.png" width="200" alt="Withdraw">
+<img src="demo/VirtualCard.png" width="200" alt="VirtualCard">
+<img src="demo/CurrencyExchange.png" width="200" alt="CurrencyExchange">
 <img src="demo/HistoryTransaction.png" width="200" alt="Transaction History">
 <img src="demo/SettingProfile1.png" width="200" alt="Profile View">
 <img src="demo/SettingsProfile2.png" width="200" alt="Profile Settings">
