@@ -92,6 +92,25 @@
                 android:exported="false"
                 android:parentActivityName=".activities.LoginActivity" />
 
+        <activity
+                android:name=".activities.VirtualCardActivity"
+                android:label="Virtual Card"
+                android:parentActivityName=".activities.DashboardActivity">
+            <meta-data
+                    android:name="android.support.PARENT_ACTIVITY"
+                    android:value=".activities.DashboardActivity" />
+        </activity>
+
+
+        <activity android:name=".activities.ChangePinActivity"
+                  android:parentActivityName=".activities.VirtualCardActivity" />
+
+        <activity android:name=".activities.CardSettingsActivity"
+                  android:parentActivityName=".activities.VirtualCardActivity" />
+
+        <activity android:name=".activities.ExchangeActivity" />
+
+
     </application>
 
 </manifest>
