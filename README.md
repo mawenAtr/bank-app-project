@@ -46,18 +46,18 @@ Requirement: JDK 17, Docker 20.10
 
 <div align="center" style="display: flex; flex-wrap: wrap; justify-content: center; gap: 10px;">
   
-<img src="photos/CreateAccount.png" width="200" alt="Create Account">
-<img src="photos/Login.png" width="200" alt="Login">  
-<img src="photos/RecoverPassword.png" width="200" alt="Password Recovery">
-<img src="photos/Dashboard.png" width="200" alt="Dashboard">
-<img src="photos/SimulatorATM.png" width="200" alt="ATM Operations">
-<img src="photos/Transfer.png" width="200" alt="Money Transfer">
-<img src="photos/DepositATM.png" width="200" alt="Deposit">
-<img src="photos/WithdrawATM.png" width="200" alt="Withdraw">
-<img src="photos/HistoryTransaction.png" width="200" alt="Transaction History">
-<img src="photos/SettingProfile1.png" width="200" alt="Profile View">
-<img src="photos/SettingsProfile2.png" width="200" alt="Profile Settings">
-  
+<img src="demo/CreateAccount.png" width="200" alt="Create Account">
+<img src="demo/Login.png" width="200" alt="Login">  
+<img src="demo/RecoverPassword.png" width="200" alt="Password Recovery">
+<img src="demo/Dashboard.png" width="200" alt="Dashboard">
+<img src="demo/SimulatorATM.png" width="200" alt="ATM Operations">
+<img src="demo/Transfer.png" width="200" alt="Money Transfer">
+<img src="demo/DepositATM.png" width="200" alt="Deposit">
+<img src="demo/WithdrawATM.png" width="200" alt="Withdraw">
+<img src="demo/HistoryTransaction.png" width="200" alt="Transaction History">
+<img src="demo/SettingProfile1.png" width="200" alt="Profile View">
+<img src="demo/SettingsProfile2.png" width="200" alt="Profile Settings">
+
 </div>
 
 
