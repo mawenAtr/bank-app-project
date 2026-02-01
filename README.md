@@ -35,19 +35,19 @@ Requirement: JDK 17, Docker 20.10, Gradle 7.0
 
 #3. User Experience
    
-1. Registration → Create account with personal details
-2. Login → Secure authentication
-3. Dashboard → Overview of balances and quick actions
-4. Transactions → View and filter transaction history
-5. Transfers → Send money to other accounts
-6. ATM Operations → Simulate deposit/withdraw operations
-7. Currency Exchange → Convert between currencies
-8. Virtual Card → Generate and manage payment cards
-9. Profile Settings → Update personal information
+- Registration → Create account with personal details
+- Login → Secure authentication
+- Dashboard → Overview of balances and quick actions
+- Transactions → View and filter transaction history
+- Transfers → Send money to other accounts
+- ATM Operations → Simulate deposit/withdraw operations
+- Currency Exchange → Convert between currencies
+- Virtual Card → Generate and manage payment cards
+- Profile Settings → Update personal information
 
 #4. Installation and Run
 
-Backend Setup (Spring Boot)
+- Backend Setup (Spring Boot)
 
 1. Navigate to backend directory:
 cd bank-app-backend
@@ -63,7 +63,7 @@ gradlew bootRun
 - **Java version:** 17
 - **Framework:** Spring Boot 3
 
-Android App Setup
+- Android App Setup
 
 1. Open project in Android Studio:
 Open `bank-app-project`
@@ -75,7 +75,7 @@ http://10.0.2.2:8080
 - Select emulator or device
 - Click **Run ▶**
 
-Test Account
+- Test Account
 
 Use account for testing: 
 - Email: aaaaa@gmail.com
@@ -85,7 +85,7 @@ Run Order
 1. Run Spring Boot backend 
 2. Run Android application
 
-Troubleshooting
+- Troubleshooting
 
 Backend cannot connect to database
 - Make sure Docker container is running
