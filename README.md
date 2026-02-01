@@ -3,7 +3,7 @@
 Mobile application build android (Java) and Spring boot backend. 
 Basic activities such as logging in, creating an account , transfer and transaction history.
 
-#1. Features
+## Features
    
 - User Authentication: Secure login system
 - Account Management: Create and manage bank accounts
@@ -18,7 +18,7 @@ Basic activities such as logging in, creating an account , transfer and transact
 - Database Integration: MySQL with Hibernate/JPA
 - Containerization: Docker for database management
 
-#2. Technologies
+## Technologies
 
 - Java 
 - Spring Boot
@@ -33,7 +33,7 @@ Basic activities such as logging in, creating an account , transfer and transact
 Requirement: JDK 17, Docker 20.10, Gradle 7.0
 
 
-#3. User Experience
+## User Experience
    
 - Registration → Create account with personal details
 - Login → Secure authentication
@@ -45,9 +45,9 @@ Requirement: JDK 17, Docker 20.10, Gradle 7.0
 - Virtual Card → Generate and manage payment cards
 - Profile Settings → Update personal information
 
-#4. Installation and Run
 
-## Backend Setup (Spring Boot)
+
+## Installation and Run Backend Setup (Spring Boot)
 
 1. Navigate to backend directory:
 cd bank-app-backend
