@@ -61,7 +61,7 @@
                 android:inputType="textPassword"
                 android:maxLines="1"
                 android:background="@drawable/edittext_background"
-                android:padding="16dp" />
+                android:padding="16dp"/>
 
     </com.google.android.material.textfield.TextInputLayout>
 

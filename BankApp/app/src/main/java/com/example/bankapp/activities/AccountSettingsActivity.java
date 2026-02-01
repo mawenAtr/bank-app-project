@@ -86,7 +86,20 @@ public class AccountSettingsActivity extends AppCompatActivity {
         runOnUiThread(() -> {
             userNameText.setText(user.getFullName());
             userPeselText.setText(user.getPesel() != null ? user.getPesel() : "Not available");
-            userDobText.setText(user.getDateOfBirth() != null ? user.getDateOfBirth() : "Not available");
+
+            if (user.getDateOfBirth() != null && !user.getDateOfBirth().isEmpty()) {
+                String dateStr = user.getDateOfBirth();
+
+                if (dateStr.matches("\\d{4}-\\d{2}-\\d{2}")) {
+                    String[] parts = dateStr.split("-");
+                    String formattedDate = parts[2] + "/" + parts[1] + "/" + parts[0];
+                    userDobText.setText(formattedDate);
+                } else {
+                    userDobText.setText(dateStr);
+                }
+            } else {
+                userDobText.setText("Not available");
+            }
 
             String address = user.getAddress();
             String city = user.getCity();

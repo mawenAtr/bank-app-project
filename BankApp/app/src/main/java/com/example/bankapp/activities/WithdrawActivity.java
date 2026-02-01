@@ -23,9 +23,14 @@ public class WithdrawActivity extends AppCompatActivity {
     private EditText amountInput;
     private Button confirmButton;
     private TextView balanceText;
+    private TextView currencySymbolText;
+    private TextView currencySymbolEdit;
     private ApiService apiService;
     private String userEmail;
-    private double currentBalance = 0.0;
+    private String currentCurrency = "PLN";
+    private double currentBalancePln = 0.0;
+    private double currentBalanceEur = 0.0;
+    private double currentBalanceUsd = 0.0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,18 +48,35 @@ public class WithdrawActivity extends AppCompatActivity {
         amountInput = findViewById(R.id.withdraw_amount_input);
         confirmButton = findViewById(R.id.withdraw_confirm_button);
         balanceText = findViewById(R.id.withdraw_result_message);
+        currencySymbolText = findViewById(R.id.currency_symbol_text);
+        currencySymbolEdit = findViewById(R.id.currency_symbol_edit);
     }
 
     private void getUserData() {
         SharedPreferences prefs = getSharedPreferences("bank_app", MODE_PRIVATE);
         userEmail = prefs.getString("user_email", null);
-        currentBalance = prefs.getFloat("balance", 0.0f);
+        currentCurrency = prefs.getString("preferred_currency", "PLN");
+
+        currentBalancePln = prefs.getFloat("balance_pln", 0.0f);
+        currentBalanceEur = prefs.getFloat("balance_eur", 0.0f);
+        currentBalanceUsd = prefs.getFloat("balance_usd", 0.0f);
 
         if (userEmail != null) {
+            updateCurrencyDisplay();
             updateBalanceText();
         } else {
             Toast.makeText(this, "Error: User not found", Toast.LENGTH_SHORT).show();
             finish();
+        }
+    }
+
+    private void updateCurrencyDisplay() {
+        String symbol = getCurrencySymbol(currentCurrency);
+        if (currencySymbolText != null) {
+            currencySymbolText.setText(currentCurrency);
+        }
+        if (currencySymbolEdit != null) {
+            currencySymbolEdit.setText(symbol);
         }
     }
 
@@ -83,6 +105,7 @@ public class WithdrawActivity extends AppCompatActivity {
             return;
         }
 
+        double currentBalance = getCurrentBalance();
         if (amount > currentBalance) {
             Toast.makeText(this, "Insufficient funds", Toast.LENGTH_SHORT).show();
             return;
@@ -91,23 +114,65 @@ public class WithdrawActivity extends AppCompatActivity {
         useBackendWithdraw(amount);
     }
 
+    private double getCurrentBalance() {
+        switch (currentCurrency) {
+            case "EUR":
+                return currentBalanceEur;
+            case "USD":
+                return currentBalanceUsd;
+            case "PLN":
+            default:
+                return currentBalancePln;
+        }
+    }
+
     private void useBackendWithdraw(double amount) {
         WithdrawRequest withdrawRequest = new WithdrawRequest(userEmail, amount);
+        withdrawRequest.setCurrency(currentCurrency);
 
-        Call<User> call = apiService.withdraw(withdrawRequest);
+        Call<User> call;
+        switch (currentCurrency) {
+            case "EUR":
+                call = apiService.withdrawEur(withdrawRequest);
+                break;
+            case "USD":
+                call = apiService.withdrawUsd(withdrawRequest);
+                break;
+            case "PLN":
+            default:
+                call = apiService.withdrawPln(withdrawRequest);
+                break;
+        }
+
         call.enqueue(new Callback<User>() {
             @Override
             public void onResponse(Call<User> call, Response<User> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     User user = response.body();
-                    currentBalance = user.getBalance();
+
+                    switch (currentCurrency) {
+                        case "EUR":
+                            currentBalanceEur = user.getBalanceEur() != null ?
+                                    user.getBalanceEur().doubleValue() : 0.0;
+                            break;
+                        case "USD":
+                            currentBalanceUsd = user.getBalanceUsd() != null ?
+                                    user.getBalanceUsd().doubleValue() : 0.0;
+                            break;
+                        case "PLN":
+                        default:
+                            currentBalancePln = user.getBalancePln() != null ?
+                                    user.getBalancePln().doubleValue() : 0.0;
+                            break;
+                    }
 
                     updateUserData(user);
                     updateBalanceText();
                     amountInput.setText("");
 
+                    String symbol = getCurrencySymbol(currentCurrency);
                     Toast.makeText(WithdrawActivity.this,
-                            "Withdrawn " + String.format("%.2f", amount) + " PLN",
+                            "Withdrawn " + String.format("%.2f", amount) + " " + symbol,
                             Toast.LENGTH_SHORT).show();
 
                     new Handler().postDelayed(() -> {
@@ -136,11 +201,32 @@ public class WithdrawActivity extends AppCompatActivity {
     private void updateUserData(User user) {
         SharedPreferences prefs = getSharedPreferences("bank_app", MODE_PRIVATE);
         SharedPreferences.Editor editor = prefs.edit();
-        editor.putFloat("balance", user.getBalance() != null ? user.getBalance().floatValue() : 0f);
+
+        if (user.getBalancePln() != null) {
+            editor.putFloat("balance_pln", user.getBalancePln().floatValue());
+        }
+        if (user.getBalanceEur() != null) {
+            editor.putFloat("balance_eur", user.getBalanceEur().floatValue());
+        }
+        if (user.getBalanceUsd() != null) {
+            editor.putFloat("balance_usd", user.getBalanceUsd().floatValue());
+        }
+
         editor.apply();
     }
 
     private void updateBalanceText() {
-        balanceText.setText(String.format("Balance: %.2f PLN", currentBalance));
+        double currentBalance = getCurrentBalance();
+        String symbol = getCurrencySymbol(currentCurrency);
+        balanceText.setText(String.format("Balance: %.2f %s", currentBalance, symbol));
+    }
+
+    private String getCurrencySymbol(String currency) {
+        switch (currency) {
+            case "PLN": return "zł";
+            case "EUR": return "€";
+            case "USD": return "$";
+            default: return currency;
+        }
     }
 }

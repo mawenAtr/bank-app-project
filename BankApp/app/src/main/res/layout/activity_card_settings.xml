@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="16dp"
+            android:background="@color/light_gray"
+            android:fitsSystemWindows="true">
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+        <TextView
+                android:id="@+id/settings_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Card Settings"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:textColor="@color/primary_color"
+                android:gravity="center"
+                android:layout_marginBottom="24dp" />
+
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@drawable/bg_card_rounded"
+                android:padding="20dp"
+                android:elevation="2dp"
+                android:layout_marginBottom="16dp">
+
+            <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Transaction Limits"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/black"
+                    android:layout_marginBottom="16dp"/>
+
+            <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp"
+                    app:boxCornerRadiusBottomEnd="8dp"
+                    app:boxCornerRadiusBottomStart="8dp"
+                    app:boxCornerRadiusTopEnd="8dp"
+                    app:boxCornerRadiusTopStart="8dp"
+                    app:boxStrokeColor="@color/primary_color"
+                    app:hintTextColor="@color/gray">
+
+                <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/daily_limit_input"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Daily Limit"
+                        android:inputType="number"
+                        android:text="1000"
+                        android:textSize="14sp"
+                        android:textColor="@color/black" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:boxCornerRadiusBottomEnd="8dp"
+                    app:boxCornerRadiusBottomStart="8dp"
+                    app:boxCornerRadiusTopEnd="8dp"
+                    app:boxCornerRadiusTopStart="8dp"
+                    app:boxStrokeColor="@color/primary_color"
+                    app:hintTextColor="@color/gray">
+
+                <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/transaction_limit_input"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Transaction Limit"
+                        android:inputType="number"
+                        android:text="500"
+                        android:textSize="14sp"
+                        android:textColor="@color/black" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+        </LinearLayout>
+
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@drawable/bg_card_rounded"
+                android:padding="20dp"
+                android:elevation="2dp"
+                android:layout_marginBottom="24dp">
+
+            <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Card Features"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/black"
+                    android:layout_marginBottom="16dp"/>
+
+            <com.google.android.material.switchmaterial.SwitchMaterial
+                    android:id="@+id/switch_online_payments"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Online Payments"
+                    android:textSize="16sp"
+                    android:textColor="@color/black"
+                    android:layout_marginBottom="12dp"
+                    app:trackColor="@color/primary_color"
+                    app:thumbColor="@color/white"
+                    android:checked="true"/>
+
+            <com.google.android.material.switchmaterial.SwitchMaterial
+                    android:id="@+id/switch_atm_withdrawals"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="ATM Withdrawals"
+                    android:textSize="16sp"
+                    android:textColor="@color/black"
+                    app:trackColor="@color/primary_color"
+                    app:thumbColor="@color/white"
+                    android:checked="true"/>
+
+        </LinearLayout>
+
+        <Button
+                android:id="@+id/btn_save_settings"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:text="SAVE SETTINGS"
+                android:background="@drawable/bg_button_primary"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:elevation="2dp" />
+
+    </LinearLayout>
+</ScrollView>

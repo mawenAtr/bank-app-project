@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="16dp"
+            android:background="@color/light_gray"
+            android:fitsSystemWindows="true">
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+        <TextView
+                android:id="@+id/pin_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Change PIN"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:textColor="@color/primary_color"
+                android:gravity="center"
+                android:layout_marginBottom="24dp" />
+
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@drawable/bg_card_rounded"
+                android:padding="20dp"
+                android:elevation="2dp"
+                android:layout_marginBottom="24dp">
+
+            <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp"
+                    app:boxCornerRadiusBottomEnd="8dp"
+                    app:boxCornerRadiusBottomStart="8dp"
+                    app:boxCornerRadiusTopEnd="8dp"
+                    app:boxCornerRadiusTopStart="8dp"
+                    app:boxStrokeColor="@color/primary_color"
+                    app:hintTextColor="@color/gray">
+
+                <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/current_pin_input"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Current PIN"
+                        android:inputType="numberPassword"
+                        android:maxLength="4"
+                        android:textSize="14sp"
+                        android:textColor="@color/black" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp"
+                    app:boxCornerRadiusBottomEnd="8dp"
+                    app:boxCornerRadiusBottomStart="8dp"
+                    app:boxCornerRadiusTopEnd="8dp"
+                    app:boxCornerRadiusTopStart="8dp"
+                    app:boxStrokeColor="@color/primary_color"
+                    app:hintTextColor="@color/gray">
+
+                <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/new_pin_input"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="New PIN"
+                        android:inputType="numberPassword"
+                        android:maxLength="4"
+                        android:textSize="14sp"
+                        android:textColor="@color/black" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:boxCornerRadiusBottomEnd="8dp"
+                    app:boxCornerRadiusBottomStart="8dp"
+                    app:boxCornerRadiusTopEnd="8dp"
+                    app:boxCornerRadiusTopStart="8dp"
+                    app:boxStrokeColor="@color/primary_color"
+                    app:hintTextColor="@color/gray">
+
+                <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/confirm_pin_input"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Confirm New PIN"
+                        android:inputType="numberPassword"
+                        android:maxLength="4"
+                        android:textSize="14sp"
+                        android:textColor="@color/black" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="PIN must be 4 digits"
+                    android:textSize="11sp"
+                    android:textColor="@color/gray"
+                    android:layout_marginTop="8dp" />
+
+        </LinearLayout>
+
+        <Button
+                android:id="@+id/btn_change_pin"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:text="CHANGE PIN"
+                android:background="@drawable/bg_button_primary"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:elevation="2dp" />
+
+    </LinearLayout>
+</ScrollView>

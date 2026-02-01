@@ -3,6 +3,7 @@ package com.example.bankapp.activities;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -12,23 +13,34 @@ import com.example.bankapp.R;
 import com.example.bankapp.api.ApiService;
 import com.example.bankapp.api.RetrofitClient;
 import com.example.bankapp.models.User;
-
+import com.google.android.material.card.MaterialCardView;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
 
 public class DashboardActivity extends AppCompatActivity {
 
     private TextView welcomeText;
     private TextView accountNumberText;
     private TextView balanceText;
+    private TextView currencyText;
     private ImageButton toggleBalanceButton;
+    private MaterialCardView currencySelectorCard;
+    private MaterialCardView currencyPopup;
+    private View currencyOptionPln;
+    private View currencyOptionEur;
+    private View currencyOptionUsd;
+
     private boolean isBalanceVisible = false;
+    private String currentCurrency = "PLN";
+    private Map<String, Double> balances = new HashMap<>();
 
     private ApiService apiService;
     private String userEmail;
     private String accountNumber;
-    private Double currentBalance = 0.0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,9 +79,83 @@ public class DashboardActivity extends AppCompatActivity {
         accountNumberText = findViewById(R.id.account_number_text);
         balanceText = findViewById(R.id.balance_text);
         toggleBalanceButton = findViewById(R.id.toggle_balance_button);
+        currencyText = findViewById(R.id.currency_text);
+        currencySelectorCard = findViewById(R.id.currency_selector_card);
+        currencyPopup = findViewById(R.id.currency_popup);
+        currencyOptionPln = findViewById(R.id.currency_option_pln);
+        currencyOptionEur = findViewById(R.id.currency_option_eur);
+        currencyOptionUsd = findViewById(R.id.currency_option_usd);
 
         hideBalance();
         toggleBalanceButton.setOnClickListener(v -> toggleBalanceVisibility());
+    }
+
+    private void setupButtonListeners() {
+        currencySelectorCard.setOnClickListener(v -> {
+            if (currencyPopup.getVisibility() == View.VISIBLE) {
+                currencyPopup.setVisibility(View.GONE);
+            } else {
+                currencyPopup.setVisibility(View.VISIBLE);
+            }
+        });
+
+        currencyOptionPln.setOnClickListener(v -> {
+            changeCurrency("PLN");
+            currencyPopup.setVisibility(View.GONE);
+        });
+
+        currencyOptionEur.setOnClickListener(v -> {
+            changeCurrency("EUR");
+            currencyPopup.setVisibility(View.GONE);
+        });
+
+        currencyOptionUsd.setOnClickListener(v -> {
+            changeCurrency("USD");
+            currencyPopup.setVisibility(View.GONE);
+        });
+    }
+
+    private void changeCurrency(String currencyCode) {
+        currentCurrency = currencyCode;
+        currencyText.setText(currencyCode);
+
+        Double balance = balances.getOrDefault(currencyCode, 0.0);
+        String symbol = getCurrencySymbol(currencyCode);
+
+        if (isBalanceVisible) {
+            balanceText.setText(String.format(Locale.getDefault(), "Balance: %.2f %s", balance, symbol));
+        } else {
+            balanceText.setText(String.format("Balance: ••••• %s", symbol));
+        }
+
+        SharedPreferences prefs = getSharedPreferences("bank_app", MODE_PRIVATE);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putString("preferred_currency", currencyCode);
+        editor.apply();
+    }
+
+    private String getCurrencySymbol(String currencyCode) {
+        switch (currencyCode) {
+            case "PLN": return "zł";
+            case "EUR": return "€";
+            case "USD": return "$";
+            default: return currencyCode;
+        }
+    }
+
+    private void toggleBalanceVisibility() {
+        isBalanceVisible = !isBalanceVisible;
+
+        Double balance = balances.getOrDefault(currentCurrency, 0.0);
+        String symbol = getCurrencySymbol(currentCurrency);
+
+        if (isBalanceVisible) {
+            balanceText.setText(String.format(Locale.getDefault(), "Balance: %.2f %s", balance, symbol));
+            toggleBalanceButton.setImageResource(R.drawable.ic_visibility);
+        } else {
+            balanceText.setText(String.format("Balance: ••••• %s", symbol));
+            toggleBalanceButton.setImageResource(R.drawable.ic_visibility_off);
+        }
     }
 
     private void checkSharedPreferences() {
@@ -128,12 +214,6 @@ public class DashboardActivity extends AppCompatActivity {
     private void displayUserData(User user) {
         String firstName = user.getFirstName();
         String accountNum = user.getAccountNumber();
-        Double balance = user.getBalance();
-
-        if (balance == null) {
-            balance = 0.0;
-        }
-        currentBalance = balance;
 
         if (firstName != null && !firstName.trim().isEmpty()) {
             String formattedName = firstName.trim();
@@ -148,11 +228,13 @@ public class DashboardActivity extends AppCompatActivity {
             accountNumber = accountNum;
         }
 
-        if (isBalanceVisible) {
-            showBalance();
-        } else {
-            hideBalance();
-        }
+        balances.put("PLN", user.getBalancePln() != null ? user.getBalancePln().doubleValue() : 0.0);
+        balances.put("EUR", user.getBalanceEur() != null ? user.getBalanceEur().doubleValue() : 0.0);
+        balances.put("USD", user.getBalanceUsd() != null ? user.getBalanceUsd().doubleValue() : 0.0);
+
+        SharedPreferences prefs = getSharedPreferences("bank_app", MODE_PRIVATE);
+        String savedCurrency = prefs.getString("preferred_currency", "PLN");
+        changeCurrency(savedCurrency);
 
         saveUserDataToPreferences(user);
     }
@@ -161,9 +243,10 @@ public class DashboardActivity extends AppCompatActivity {
         SharedPreferences prefs = getSharedPreferences("bank_app", MODE_PRIVATE);
         String firstName = prefs.getString("first_name", null);
         String accountNum = prefs.getString("account_number", null);
-        float balance = prefs.getFloat("balance", 0.0f);
 
-        currentBalance = (double) balance;
+        balances.put("PLN", (double) prefs.getFloat("balance_pln", 0.0f));
+        balances.put("EUR", (double) prefs.getFloat("balance_eur", 0.0f));
+        balances.put("USD", (double) prefs.getFloat("balance_usd", 0.0f));
 
         if (firstName != null && !firstName.isEmpty()) {
             welcomeText.setText("Welcome, " + firstName + "!");
@@ -177,15 +260,12 @@ public class DashboardActivity extends AppCompatActivity {
             accountNumber = accountNum;
         }
 
-        if (isBalanceVisible) {
-            showBalance();
-        } else {
-            hideBalance();
-        }
+        String savedCurrency = prefs.getString("preferred_currency", "PLN");
+        changeCurrency(savedCurrency);
     }
 
     private void refreshBalanceDisplay(double balance) {
-        currentBalance = balance;
+        balances.put("PLN", balance);
         if (isBalanceVisible) {
             showBalance();
         } else {
@@ -196,11 +276,8 @@ public class DashboardActivity extends AppCompatActivity {
     private void updateUserBalance(double newBalance) {
         SharedPreferences prefs = getSharedPreferences("bank_app", MODE_PRIVATE);
         SharedPreferences.Editor editor = prefs.edit();
-        editor.putFloat("balance", (float) newBalance);
+        editor.putFloat("balance_pln", (float) newBalance);
         editor.apply();
-    }
-
-    private void setupButtonListeners() {
     }
 
     private String maskAccountNumberLast4(String accountNumber) {
@@ -211,23 +288,17 @@ public class DashboardActivity extends AppCompatActivity {
         return "••••" + last4Digits;
     }
 
-    private void toggleBalanceVisibility() {
-        if (isBalanceVisible) {
-            hideBalance();
-        } else {
-            showBalance();
-        }
-        isBalanceVisible = !isBalanceVisible;
-    }
-
     private void showBalance() {
-        String balanceFormatted = String.format("%,.2f PLN", currentBalance);
-        balanceText.setText("Balance: " + balanceFormatted);
+        Double balance = balances.getOrDefault(currentCurrency, 0.0);
+        String symbol = getCurrencySymbol(currentCurrency);
+        String balanceFormatted = String.format(Locale.getDefault(), "Balance: %.2f %s", balance, symbol);
+        balanceText.setText(balanceFormatted);
         toggleBalanceButton.setImageResource(R.drawable.ic_visibility);
     }
 
     private void hideBalance() {
-        balanceText.setText("Balance: ••••• PLN");
+        String symbol = getCurrencySymbol(currentCurrency);
+        balanceText.setText(String.format("Balance: ••••• %s", symbol));
         toggleBalanceButton.setImageResource(R.drawable.ic_visibility_off);
     }
 
@@ -238,11 +309,17 @@ public class DashboardActivity extends AppCompatActivity {
         editor.putString("first_name", user.getFirstName());
         editor.putString("account_number", user.getAccountNumber());
 
-        Double balance = user.getBalance();
-        if (balance == null) {
-            balance = 0.0;
+        if (user.getBalancePln() != null) {
+            editor.putFloat("balance_pln", user.getBalancePln().floatValue());
         }
-        editor.putFloat("balance", balance.floatValue());
+        if (user.getBalanceEur() != null) {
+            editor.putFloat("balance_eur", user.getBalanceEur().floatValue());
+        }
+        if (user.getBalanceUsd() != null) {
+            editor.putFloat("balance_usd", user.getBalanceUsd().floatValue());
+        }
+
+        editor.putLong("user_id", user.getId());
         editor.putBoolean("is_logged_in", true);
         editor.apply();
     }
@@ -262,6 +339,18 @@ public class DashboardActivity extends AppCompatActivity {
     public void onAtmClick(View view) {
         Intent intent = new Intent(DashboardActivity.this, ATMOperationActivity.class);
         intent.putExtra("account_number", accountNumber);
+        startActivity(intent);
+    }
+
+    public void onVirtualCardClick(View view) {
+        Intent intent = new Intent(DashboardActivity.this, VirtualCardActivity.class);
+        intent.putExtra("account_number", accountNumber);
+        startActivity(intent);
+    }
+
+    public void onExchangeClick(View view) {
+        Intent intent = new Intent(DashboardActivity.this, ExchangeActivity.class);
+        intent.putExtra("email", userEmail);
         startActivity(intent);
     }
 
@@ -293,16 +382,34 @@ public class DashboardActivity extends AppCompatActivity {
 
     private void refreshUserData() {
         SharedPreferences prefs = getSharedPreferences("bank_app", MODE_PRIVATE);
-        float updatedBalance = prefs.getFloat("balance", 0.0f);
+        float updatedBalancePln = prefs.getFloat("balance_pln", 0.0f);
+        float updatedBalanceEur = prefs.getFloat("balance_eur", 0.0f);
+        float updatedBalanceUsd = prefs.getFloat("balance_usd", 0.0f);
 
-        if (Math.abs(currentBalance - updatedBalance) > 0.01) {
-            currentBalance = (double) updatedBalance;
-            if (isBalanceVisible) {
-                showBalance();
-            } else {
-                hideBalance();
-            }
+        balances.put("PLN", (double) updatedBalancePln);
+        balances.put("EUR", (double) updatedBalanceEur);
+        balances.put("USD", (double) updatedBalanceUsd);
+
+        if (isBalanceVisible) {
+            showBalance();
         }
     }
 
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        if (currencyPopup.getVisibility() == View.VISIBLE &&
+                event.getAction() == MotionEvent.ACTION_DOWN) {
+
+            int[] location = new int[2];
+            currencyPopup.getLocationOnScreen(location);
+            int x = (int) event.getRawX();
+            int y = (int) event.getRawY();
+
+            if (x < location[0] || x > location[0] + currencyPopup.getWidth() ||
+                    y < location[1] || y > location[1] + currencyPopup.getHeight()) {
+                currencyPopup.setVisibility(View.GONE);
+            }
+        }
+        return super.onTouchEvent(event);
+    }
 }

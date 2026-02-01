@@ -1,103 +1,331 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:orientation="vertical"
-              android:padding="16dp"
-              android:background="@color/white">
-
-    <TextView
-            android:id="@+id/welcome_text"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Welcome!"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            android:layout_marginBottom="24dp"
-            android:gravity="center"/>
-
-    <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:background="@drawable/bg_card_rounded"
-            android:padding="16dp"
-            android:layout_marginBottom="24dp">
-
-        <TextView
-                android:id="@+id/account_number_text"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
                 android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/white">
+
+    <com.google.android.material.card.MaterialCardView
+            android:id="@+id/currency_selector_card"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_margin="14dp"
+            app:cardCornerRadius="20dp"
+            app:cardElevation="2dp">
+
+        <LinearLayout
+                android:id="@+id/currency_selector_layout"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Account: ••••1234"
-                android:textSize="16sp"
-                android:layout_marginBottom="12dp"/>
+                android:orientation="horizontal"
+                android:paddingHorizontal="12dp"
+                android:paddingVertical="8dp"
+                android:gravity="center_vertical">
+
+            <TextView
+                    android:id="@+id/currency_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="PLN"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/primary_color"/>
+
+            <ImageView
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:layout_marginStart="4dp"
+                    android:src="@drawable/ic_arrow_down"
+                    app:tint="@color/primary_color"/>
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+    <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/currency_selector_card">
 
         <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center_vertical">
+                android:orientation="vertical"
+                android:padding="14dp">
 
             <TextView
-                    android:id="@+id/balance_text"
-                    android:layout_width="0dp"
+                    android:id="@+id/welcome_text"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Balance: ••••• PLN"
-                    android:textSize="24sp"
+                    android:text="Welcome!"
+                    android:textSize="20sp"
                     android:textStyle="bold"
-                    android:textColor="@color/primary_color"/>
+                    android:layout_marginBottom="24dp"
+                    android:gravity="center"/>
 
-            <ImageButton
-                    android:id="@+id/toggle_balance_button"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:src="@drawable/ic_visibility_off"
-                    android:background="?attr/selectableItemBackgroundBorderless"
-                    android:contentDescription="Pokaż/ukryj saldo"
-                    android:padding="8dp"/>
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:background="@drawable/bg_card_rounded"
+                    android:padding="14dp"
+                    android:layout_marginBottom="24dp">
+
+                <TextView
+                        android:id="@+id/account_number_text"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Account: ••••1234"
+                        android:textSize="16sp"
+                        android:layout_marginBottom="12dp"/>
+
+                <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical">
+
+                    <TextView
+                            android:id="@+id/balance_text"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Balance: ••••• zł"
+                            android:textSize="24sp"
+                            android:textStyle="bold"
+                            android:textColor="@color/primary_color"/>
+
+                    <ImageButton
+                            android:id="@+id/toggle_balance_button"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:src="@drawable/ic_visibility_off"
+                            android:background="?attr/selectableItemBackgroundBorderless"
+                            android:padding="8dp"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <com.google.android.material.button.MaterialButton
+                    android:id="@+id/transfer_button"
+                    style="@style/Widget.Material3.Button.ElevatedButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:onClick="onTransferClick"
+                    android:text="TRANSFER"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:paddingVertical="12dp"
+                    android:layout_marginBottom="10dp"
+                    app:cornerRadius="12dp"
+                    app:backgroundTint="@color/primary_color"
+                    android:textColor="@color/white"/>
+
+            <com.google.android.material.button.MaterialButton
+                    android:id="@+id/history_button"
+                    style="@style/Widget.Material3.Button.ElevatedButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:onClick="onHistoryClick"
+                    android:text="TRANSACTION HISTORY"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:paddingVertical="12dp"
+                    android:layout_marginBottom="10dp"
+                    app:cornerRadius="12dp"
+                    app:backgroundTint="@color/primary_color"
+                    android:textColor="@color/white"/>
+
+            <com.google.android.material.button.MaterialButton
+                    android:id="@+id/atm_button"
+                    style="@style/Widget.Material3.Button.ElevatedButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:onClick="onAtmClick"
+                    android:text="ATM"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:paddingVertical="12dp"
+                    android:layout_marginBottom="10dp"
+                    app:cornerRadius="12dp"
+                    app:backgroundTint="@color/primary_color"
+                    android:textColor="@color/white"/>
+
+            <com.google.android.material.button.MaterialButton
+                    android:id="@+id/virtual_card_button"
+                    style="@style/Widget.Material3.Button.ElevatedButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:onClick="onVirtualCardClick"
+                    android:text="VIRTUAL CARD"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:paddingVertical="12dp"
+                    android:layout_marginBottom="10dp"
+                    app:cornerRadius="12dp"
+                    app:backgroundTint="@color/primary_color"
+                    android:textColor="@color/white"/>
+
+            <com.google.android.material.button.MaterialButton
+                    android:id="@+id/exchange_button"
+                    style="@style/Widget.Material3.Button.ElevatedButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:onClick="onExchangeClick"
+                    android:text="EXCHANGE"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:paddingVertical="12dp"
+                    android:layout_marginBottom="10dp"
+                    app:cornerRadius="12dp"
+                    app:backgroundTint="@color/primary_color"
+                    android:textColor="@color/white"/>
+
+            <com.google.android.material.button.MaterialButton
+                    android:id="@+id/settings_dashboard_button"
+                    style="@style/Widget.Material3.Button.ElevatedButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:onClick="onSettingsClick"
+                    android:text="SETTINGS"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:paddingVertical="12dp"
+                    android:layout_marginBottom="10dp"
+                    app:cornerRadius="12dp"
+                    app:backgroundTint="@color/primary_color"
+                    android:textColor="@color/white"/>
+
+            <com.google.android.material.button.MaterialButton
+                    android:id="@+id/logout_button"
+                    style="@style/Widget.Material3.Button.ElevatedButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:onClick="onLogoutClick"
+                    android:text="LOGOUT"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:paddingVertical="12dp"
+                    app:cornerRadius="12dp"
+                    app:backgroundTint="@color/error"
+                    android:textColor="@color/white"/>
 
         </LinearLayout>
+    </ScrollView>
 
-    </LinearLayout>
-
-    <Button
-            android:id="@+id/transfer_button"
-            android:layout_width="match_parent"
+    <com.google.android.material.card.MaterialCardView
+            android:id="@+id/currency_popup"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="TRANSFER"
-            android:layout_marginBottom="8dp"
-            android:onClick="onTransferClick"/>
+            android:layout_below="@id/currency_selector_card"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="14dp"
+            android:visibility="gone"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="4dp">
 
-    <Button
-            android:id="@+id/history_button"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="TRANSACTION HISTORY"
-            android:layout_marginBottom="8dp"
-            android:onClick="onHistoryClick"/>
+        <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="8dp">
 
-    <Button
-            android:id="@+id/atm_button"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="ATM"
-            android:layout_marginBottom="8dp"
-            android:onClick="onAtmClick"/>
+            <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Select Currency"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    android:padding="8dp"
+                    android:gravity="center"/>
 
-    <Button
-            android:id="@+id/settings_button"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="SETTINGS"
-            android:layout_marginBottom="8dp"
-            android:onClick="onSettingsClick"/>
+            <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/gray"
+                    android:layout_marginVertical="4dp"/>
 
-    <Button
-            android:id="@+id/logout_button"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="LOGOUT"
-            android:onClick="onLogoutClick"/>
+            <LinearLayout
+                    android:id="@+id/currency_option_pln"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="12dp"
+                    android:background="?attr/selectableItemBackground"
+                    android:gravity="center_vertical">
 
-</LinearLayout>
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="PLN"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/primary_color"/>
+
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="(zł)"
+                        android:textSize="14sp"
+                        android:layout_marginStart="8dp"
+                        android:textColor="@color/gray_dark"/>
+            </LinearLayout>
+
+            <LinearLayout
+                    android:id="@+id/currency_option_eur"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="12dp"
+                    android:background="?attr/selectableItemBackground"
+                    android:gravity="center_vertical">
+
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="EUR"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/primary_color"/>
+
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="(€)"
+                        android:textSize="14sp"
+                        android:layout_marginStart="8dp"
+                        android:textColor="@color/gray_dark"/>
+            </LinearLayout>
+
+            <LinearLayout
+                    android:id="@+id/currency_option_usd"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="12dp"
+                    android:background="?attr/selectableItemBackground"
+                    android:gravity="center_vertical">
+
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="USD"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/primary_color"/>
+
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="($)"
+                        android:textSize="14sp"
+                        android:layout_marginStart="8dp"
+                        android:textColor="@color/gray_dark"/>
+            </LinearLayout>
+
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+</RelativeLayout>

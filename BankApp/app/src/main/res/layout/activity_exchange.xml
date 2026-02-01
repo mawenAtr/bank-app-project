@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#f8fafc"
+            android:fillViewport="true">
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+        <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="4dp"
+                app:cardBackgroundColor="@color/white">
+
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="20dp">
+
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="From"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:textColor="#1e293b"
+                        android:layout_marginBottom="8dp" />
+
+                <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:layout_marginBottom="24dp">
+
+                    <EditText
+                            android:id="@+id/amount_edit_text"
+                            android:layout_width="0dp"
+                            android:layout_height="56dp"
+                            android:layout_weight="2"
+                            android:hint="0.00"
+                            android:inputType="numberDecimal"
+                            android:textSize="20sp"
+                            android:paddingHorizontal="16dp"
+                            android:gravity="center_vertical"
+                            android:background="@drawable/bg_edittext" />
+
+                    <FrameLayout
+                            android:layout_width="0dp"
+                            android:layout_height="56dp"
+                            android:layout_weight="1"
+                            android:layout_marginStart="8dp"
+                            android:background="@drawable/bg_edittext">
+
+                        <Spinner
+                                android:id="@+id/from_currency_spinner"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:paddingHorizontal="16dp"
+                                android:gravity="center" />
+                    </FrameLayout>
+                </LinearLayout>
+
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="To"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:textColor="#1e293b"
+                        android:layout_marginBottom="8dp" />
+
+                <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:layout_marginBottom="32dp">
+
+                    <TextView
+                            android:id="@+id/result_text_view"
+                            android:layout_width="0dp"
+                            android:layout_height="56dp"
+                            android:layout_weight="2"
+                            android:text="0.00"
+                            android:textSize="20sp"
+                            android:paddingHorizontal="16dp"
+                            android:gravity="center_vertical"
+                            android:background="@drawable/bg_edittext" />
+
+                    <FrameLayout
+                            android:layout_width="0dp"
+                            android:layout_height="56dp"
+                            android:layout_weight="1"
+                            android:layout_marginStart="8dp"
+                            android:background="@drawable/bg_edittext">
+
+                        <Spinner
+                                android:id="@+id/to_currency_spinner"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:paddingHorizontal="16dp"
+                                android:gravity="center" />
+                    </FrameLayout>
+                </LinearLayout>
+
+                <com.google.android.material.button.MaterialButton
+                        android:id="@+id/exchange_button"
+                        style="@style/Widget.Material3.Button.ElevatedButton"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="EXCHANGE"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        android:paddingVertical="18dp"
+                        app:cornerRadius="12dp"
+                        android:backgroundTint="@color/primary_color"
+                        android:textColor="@color/white" />
+
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+    </LinearLayout>
+</ScrollView>
