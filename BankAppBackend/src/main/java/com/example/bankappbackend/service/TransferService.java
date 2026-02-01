@@ -28,56 +28,108 @@ public class TransferService {
 
     @Transactional
     public TransferResponse executeTransfer(TransferRequest transferRequest) {
-
-        Optional<User> senderOptional =
-                userRepository.findByAccountNumber(transferRequest.getFromAccountNumber());
-
+        Optional<User> senderOptional = userRepository.findByAccountNumber(transferRequest.getFromAccountNumber());
         if (senderOptional.isEmpty()) {
             return new TransferResponse(false, "Sender account not found",
                     transferRequest.getAmount(), 0.0);
         }
         User sender = senderOptional.get();
 
-        Optional<User> receiverOptional =
-                userRepository.findByAccountNumber(transferRequest.getToAccountNumber());
-
+        Optional<User> receiverOptional = userRepository.findByAccountNumber(transferRequest.getToAccountNumber());
         if (receiverOptional.isEmpty()) {
+            BigDecimal senderBalancePln = sender.getBalancePln() != null ? sender.getBalancePln() : BigDecimal.ZERO;
             return new TransferResponse(false, "Receiver account not found",
-                    transferRequest.getAmount(), sender.getBalance());
+                    transferRequest.getAmount(), senderBalancePln.doubleValue());
         }
         User receiver = receiverOptional.get();
 
         if (transferRequest.getFromAccountNumber().equals(transferRequest.getToAccountNumber())) {
+            BigDecimal senderBalancePln = sender.getBalancePln() != null ? sender.getBalancePln() : BigDecimal.ZERO;
             return new TransferResponse(false,
                     "You cannot transfer money to your own account",
                     transferRequest.getAmount(),
-                    sender.getBalance());
+                    senderBalancePln.doubleValue());
         }
 
         double amount = transferRequest.getAmount();
-        double senderBalance = sender.getBalance() != null ? sender.getBalance() : 0.0;
+        String currency = transferRequest.getCurrency() != null ? transferRequest.getCurrency() : "PLN";
 
-        if (senderBalance < amount) {
+        BigDecimal senderBalance;
+        BigDecimal receiverBalance;
+
+        // Pobierz saldo w odpowiedniej walucie
+        switch (currency.toUpperCase()) {
+            case "EUR":
+                senderBalance = sender.getBalanceEur() != null ? sender.getBalanceEur() : BigDecimal.ZERO;
+                receiverBalance = receiver.getBalanceEur() != null ? receiver.getBalanceEur() : BigDecimal.ZERO;
+                break;
+            case "USD":
+                senderBalance = sender.getBalanceUsd() != null ? sender.getBalanceUsd() : BigDecimal.ZERO;
+                receiverBalance = receiver.getBalanceUsd() != null ? receiver.getBalanceUsd() : BigDecimal.ZERO;
+                break;
+            case "PLN":
+            default:
+                senderBalance = sender.getBalancePln() != null ? sender.getBalancePln() : BigDecimal.ZERO;
+                receiverBalance = receiver.getBalancePln() != null ? receiver.getBalancePln() : BigDecimal.ZERO;
+                break;
+        }
+
+        BigDecimal transferAmount = BigDecimal.valueOf(amount);
+
+        if (senderBalance.compareTo(transferAmount) < 0) {
             return new TransferResponse(false,
                     "Insufficient funds",
                     amount,
-                    senderBalance);
+                    senderBalance.doubleValue());
         }
 
-        sender.setBalance(senderBalance - amount);
-        receiver.setBalance((receiver.getBalance() != null ? receiver.getBalance() : 0.0) + amount);
+        // Odejmij od nadawcy
+        BigDecimal newSenderBalance = senderBalance.subtract(transferAmount);
+
+        // Dodaj do odbiorcy
+        BigDecimal newReceiverBalance = receiverBalance.add(transferAmount);
+
+        // Zaktualizuj salda w odpowiedniej walucie
+        switch (currency.toUpperCase()) {
+            case "EUR":
+                sender.setBalanceEur(newSenderBalance);
+                receiver.setBalanceEur(newReceiverBalance);
+                break;
+            case "USD":
+                sender.setBalanceUsd(newSenderBalance);
+                receiver.setBalanceUsd(newReceiverBalance);
+                break;
+            case "PLN":
+            default:
+                sender.setBalancePln(newSenderBalance);
+                receiver.setBalancePln(newReceiverBalance);
+                break;
+        }
 
         userRepository.save(sender);
         userRepository.save(receiver);
 
         saveTransaction(transferRequest);
 
+        BigDecimal finalSenderBalance;
+        switch (currency.toUpperCase()) {
+            case "EUR":
+                finalSenderBalance = sender.getBalanceEur();
+                break;
+            case "USD":
+                finalSenderBalance = sender.getBalanceUsd();
+                break;
+            case "PLN":
+            default:
+                finalSenderBalance = sender.getBalancePln();
+                break;
+        }
+
         return new TransferResponse(true,
                 "Transfer completed",
                 amount,
-                sender.getBalance());
+                finalSenderBalance.doubleValue());
     }
-
 
     public List<Transaction> getTransactionsByAccount(String accountNumber, int days) {
         LocalDateTime sinceDate = LocalDateTime.now().minusDays(days);
@@ -108,6 +160,7 @@ public class TransferService {
         transaction.setReceiverName(transferRequest.getReceiverName());
         transaction.setStatus("COMPLETED");
         transaction.setTransactionDate(LocalDateTime.now());
+        transaction.setCurrency(transferRequest.getCurrency() != null ? transferRequest.getCurrency() : "PLN");
 
         transactionRepository.save(transaction);
     }

@@ -6,19 +6,7 @@ public class TransferRequest {
     private double amount;
     private String title;
     private String receiverName;
-    private String address;
-
-    public TransferRequest() {}
-
-    public TransferRequest(String fromAccountNumber, String toAccountNumber, double amount,
-                           String title, String receiverName, String address) {
-        this.fromAccountNumber = fromAccountNumber;
-        this.toAccountNumber = toAccountNumber;
-        this.amount = amount;
-        this.title = title;
-        this.receiverName = receiverName;
-        this.address = address;
-    }
+    private String currency;
 
     public String getFromAccountNumber() { return fromAccountNumber; }
     public void setFromAccountNumber(String fromAccountNumber) { this.fromAccountNumber = fromAccountNumber; }
@@ -35,6 +23,6 @@ public class TransferRequest {
     public String getReceiverName() { return receiverName; }
     public void setReceiverName(String receiverName) { this.receiverName = receiverName; }
 
-    public String getAddress() { return address; }
-    public void setAddress(String address) { this.address = address; }
+    public String getCurrency() { return currency; }
+    public void setCurrency(String currency) { this.currency = currency; }
 }
