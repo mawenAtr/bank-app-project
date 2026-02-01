@@ -1,15 +1,15 @@
    bank-app-project
 
 Mobile application build android (Java) and Spring boot backend. 
-Basic activities such as logging in, creating an account , transfer and history transaction.
+Basic activities such as logging in, creating an account , transfer and transaction history.
 
 #1. Features
    
 - User Authentication: Secure login system
 - Account Management: Create and manage bank accounts
 - Balance Overview: Real-time account balance display (PLN, USD, EUR)
-- Fund Transfers: Send money between accounts
-- Transaction History: View past transactions
+- Fund Transfers: Transfer money between accounts
+- Transaction History: Transaction log and deatails 
 - Profile Settings: User profile customization
 - ATM Simulator: Simulated ATM functionality   
 - Virtual Card: Generate and manage virtual payment cards
