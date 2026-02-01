@@ -1,6 +1,6 @@
    bank-app-project
 
-Mobile aplication build android (Java) and Spring boot backend. 
+Mobile application build android (Java) and Spring boot backend. 
 Basic activities such as logging in, creating an account , transfer and history transaction.
 
 #1. Features
